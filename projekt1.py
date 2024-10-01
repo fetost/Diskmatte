@@ -65,7 +65,7 @@ moves_down_d = 7
 paths_d = generate_paths_up_down(moves_up_d, moves_down_d)
 
 # This filters paths that never touch or cross the x-axis
-paths_never_cross_d = [path for path in paths_d if never_x_axis(path, 6)]
+paths_never_cross_d = [path for path in paths_d if never_x_axis(path, 6)] # for every path in paths_d
 
 # Number of paths that never touch/cross the x-axis
 print(f"Total paths for this part: {len(paths_d)}")
