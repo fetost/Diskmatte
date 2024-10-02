@@ -18,7 +18,7 @@ print(prime_factors)
 p = prime_factors[0]
 q = prime_factors[1]
 
-# Cipher text blocks (from the image provided)
+# Cipher text blocks 
 cipher_blocks = [
     71813256693940924296894077934214561172810879712474411,
     9448822287828090646994864850737396938193829207476291,
@@ -62,23 +62,23 @@ cipher_blocks = [
     10599418784042349226543806726994624123223235946860821
 ]
 
-# Step 1: Calculate φ(n)
+# Calculate φ(n)
 phi_n = (p - 1) * (q - 1)
 
-# Step 2: Calculate the private key 'd'
+# Calculate the private key 'd'
 d = pow(e, -1, phi_n)
 
-# Step 3: Decrypt each cipher block
+# Decrypt each cipher block
 def decrypt_rsa(cipher_block, d, n):
     return pow(cipher_block, d, n)
 
-# Step 4: Convert the decrypted message to ASCII
+# Convert the decrypted message to ASCII
 def int_to_ascii(plaintext_block):
     # Convert the integer to a byte string and then decode it to ASCII
     byte_length = (plaintext_block.bit_length() + 7) // 8
     return plaintext_block.to_bytes(byte_length, 'little').decode('utf-8', errors='ignore')
 
-# Decrypt all cipher blocks and convert them to readable text
+# Decrypt all cipher blocks and convert them to something readable
 decrypted_message = ''
 for block in cipher_blocks:
     plaintext_block = decrypt_rsa(block, d, n)
