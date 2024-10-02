@@ -5,21 +5,16 @@ from sympy import factorint
 # Given RSA parameters
 n = 126456119090476383371855906671054993650778797793018127
 e = 7937
-print("Hello 0")
-# Suppose these are the factors of n (obtained from an external tool):
-#p = 35742549198872617291353508656626642567  # Example prime factor of n
-#q = 35337092055226182123112275772383780441  # Another prime factor of n
 
+# Factorize n to find the prime factors
 factors = factorint(n)
 print(factors)
 
+# Filter out the prime factors
 prime_factors = list(factors.keys())
 print(prime_factors)
 
-#print(isprime(prime_factors[0]))
-#print(isprime(prime_factors[1]))
-#print(isprime(prime_factors[2]))
-print("Hello 1")
+# Set q and p to the prime factors of n
 p = prime_factors[0]
 q = prime_factors[1]
 
@@ -72,17 +67,17 @@ phi_n = (p - 1) * (q - 1)
 
 # Step 2: Calculate the private key 'd'
 d = pow(e, -1, phi_n)
-print("Hello 2")
+
 # Step 3: Decrypt each cipher block
 def decrypt_rsa(cipher_block, d, n):
     return pow(cipher_block, d, n)
-print("Hello 3")
+
 # Step 4: Convert the decrypted message to ASCII
 def int_to_ascii(plaintext_block):
     # Convert the integer to a byte string and then decode it to ASCII
     byte_length = (plaintext_block.bit_length() + 7) // 8
     return plaintext_block.to_bytes(byte_length, 'little').decode('utf-8', errors='ignore')
-print("Hello 4")
+
 # Decrypt all cipher blocks and convert them to readable text
 decrypted_message = ''
 for block in cipher_blocks:
