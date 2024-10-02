@@ -3,25 +3,25 @@ from sympy import isprime
 from sympy import factorint
 
 # Given RSA parameters
-n = 126456119090476383371855996671054993650778797793018127
+n = 126456119090476383371855906671054993650778797793018127
 e = 7937
-
+print("Hello 0")
 # Suppose these are the factors of n (obtained from an external tool):
 #p = 35742549198872617291353508656626642567  # Example prime factor of n
 #q = 35337092055226182123112275772383780441  # Another prime factor of n
 
 factors = factorint(n)
-#print(factors)
+print(factors)
 
 prime_factors = list(factors.keys())
 print(prime_factors)
 
-print(isprime(prime_factors[0]))
-print(isprime(prime_factors[1]))
-print(isprime(prime_factors[2]))
-
-p = prime_factors[1]
-q = prime_factors[2]
+#print(isprime(prime_factors[0]))
+#print(isprime(prime_factors[1]))
+#print(isprime(prime_factors[2]))
+print("Hello 1")
+p = prime_factors[0]
+q = prime_factors[1]
 
 # Cipher text blocks (from the image provided)
 cipher_blocks = [
@@ -31,7 +31,7 @@ cipher_blocks = [
     86506877126882849406016686638047102838609248170576618,
     16709897999784737136957685475437549241701090506782283,
     112082150953644879808862406205324790087623126644040573,
-    101300870021945928543132671557050279918096489651239300,
+    101300870021945928543132671557050279918096489651239300, 
     32937734818698596498554567892462717857351635451752837,
     103250795649561696933993996191026658588156558009063626,
     9944688399741552477615864010579036184245783411883057,
@@ -72,21 +72,21 @@ phi_n = (p - 1) * (q - 1)
 
 # Step 2: Calculate the private key 'd'
 d = pow(e, -1, phi_n)
-
+print("Hello 2")
 # Step 3: Decrypt each cipher block
 def decrypt_rsa(cipher_block, d, n):
     return pow(cipher_block, d, n)
-
+print("Hello 3")
 # Step 4: Convert the decrypted message to ASCII
 def int_to_ascii(plaintext_block):
     # Convert the integer to a byte string and then decode it to ASCII
     byte_length = (plaintext_block.bit_length() + 7) // 8
-    return plaintext_block.to_bytes(byte_length, 'big').decode('utf-8', errors='ignore')
-
+    return plaintext_block.to_bytes(byte_length, 'little').decode('utf-8', errors='ignore')
+print("Hello 4")
 # Decrypt all cipher blocks and convert them to readable text
 decrypted_message = ''
 for block in cipher_blocks:
-    decrypted_message = decrypt_rsa(block, d, n)
-    #decrypted_message += int_to_ascii(plaintext_block)
+    plaintext_block = decrypt_rsa(block, d, n)
+    decrypted_message += int_to_ascii(plaintext_block)
 
 print("Decrypted message:", decrypted_message)
